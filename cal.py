@@ -1,32 +1,31 @@
-# Simple Calculator in Python
+import streamlit as st
 
-def calculator():
-    print("Simple Calculator")
-    print("Choose an operation:")
-    print("1. Addition (+)")
-    print("2. Subtraction (-)")
-    print("3. Multiplication (*)")
-    print("4. Division (/)")
-    
-    choice = input("Enter choice (1/2/3/4): ")
+# Streamlit Calculator App
+st.title("🧮 Simple Calculator")
 
-    if choice in ['1', '2', '3', '4']:
-        num1 = float(input("Enter first number: "))
-        num2 = float(input("Enter second number: "))
+# Operation Selection
+operation = st.selectbox("Choose an operation:", 
+                         ["Addition (+)", "Subtraction (-)", "Multiplication (*)", "Division (/)"])
 
-        if choice == '1':
-            print(f"Result: {num1} + {num2} = {num1 + num2}")
-        elif choice == '2':
-            print(f"Result: {num1} - {num2} = {num1 - num2}")
-        elif choice == '3':
-            print(f"Result: {num1} * {num2} = {num1 * num2}")
-        elif choice == '4':
-            if num2 != 0:
-                print(f"Result: {num1} / {num2} = {num1 / num2}")
-            else:
-                print("Error! Division by zero is not allowed.")
-    else:
-        print("Invalid choice! Please select a valid operation.")
+# Number Inputs
+num1 = st.number_input("Enter first number", step=0.01)
+num2 = st.number_input("Enter second number", step=0.01)
 
-# Run the calculator
-calculator()
+# Perform Calculation
+result = None
+if st.button("Calculate"):
+    if operation == "Addition (+)":
+        result = num1 + num2
+    elif operation == "Subtraction (-)":
+        result = num1 - num2
+    elif operation == "Multiplication (*)":
+        result = num1 * num2
+    elif operation == "Division (/)":
+        if num2 != 0:
+            result = num1 / num2
+        else:
+            st.error("Error! Division by zero is not allowed.")
+
+# Display Result
+if result is not None:
+    st.success(f"Result: {result}")
